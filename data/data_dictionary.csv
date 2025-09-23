@@ -1,0 +1,13 @@
+Column,Description,Data_Type
+Institute,Medical Institute/College Name,object
+Course,Medical Specialization Course,object
+State,State where institute is located,object
+Category,"Student Category (GENERAL, OBC, SC, ST, EWS, PH, NRI, etc.)",object
+Quota,Admission Quota Type,object
+Course_Type,"Course Type (Clinical, Para Clinical, Pre Clinical, Non Clinical)",object
+Institute_Type,"Institute Type (Government, Private, Unknown)",object
+Annual_Fees,Annual Fee Amount (in INR),float64
+Stipend_Year1,First Year Stipend Amount (in INR),float64
+Bond_Years,Bond Period in Years,float64
+Bond_Amount,Bond Penalty Amount (in INR),float64
+Total_Beds,Total Number of Beds in Hospital,float64

@@ -1,0 +1,25 @@
+Column,Type,Unique,Missing,Missing%
+Type of Course,object,11,0,0.0%
+Quota,object,108,0,0.0%
+Category,object,290,0,0.0%
+State,object,18,0,0.0%
+Institute,object,609,0,0.0%
+Course,object,86,0,0.0%
+Fee,object,589,0,0.0%
+Stipend Year 1,object,92,0,0.0%
+Bond Years,object,8,0,0.0%
+Bond Penalty,object,15,0,0.0%
+Beds,object,227,0,0.0%
+CR 2023 1,object,12233,0,0.0%
+CR 2023 2,object,12519,0,0.0%
+CR 2023 3,object,12859,0,0.0%
+CR 2023 4,object,6065,0,0.0%
+CR 2023 5,object,4477,0,0.0%
+CR 2023 6,object,5955,0,0.0%
+CR 2023 7,object,6301,1207,4.7%
+CR 2024 1,object,13346,1207,4.7%
+CR 2024 2,object,11179,1207,4.7%
+CR 2024 3,object,8819,1282,5.0%
+CR 2024 4,object,1270,4402,17.2%
+Unnamed: 22,object,558,13649,53.4%
+Unnamed: 23,object,89,16732,65.4%
