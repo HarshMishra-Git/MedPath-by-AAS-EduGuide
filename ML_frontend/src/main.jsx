@@ -5,6 +5,28 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import App from './App.jsx'
 import './index.css'
 
+// Polyfill for Request/Response if not available (fix for bundler issues)
+if (typeof globalThis.Request === 'undefined') {
+  globalThis.Request = class Request {
+    constructor(input, init) {
+      this.url = typeof input === 'string' ? input : input.url;
+      this.method = init?.method || 'GET';
+      this.headers = init?.headers || {};
+      this.body = init?.body;
+    }
+  };
+}
+
+if (typeof globalThis.Response === 'undefined') {
+  globalThis.Response = class Response {
+    constructor(body, init) {
+      this.body = body;
+      this.status = init?.status || 200;
+      this.headers = init?.headers || {};
+    }
+  };
+}
+
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1234567890-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com';
 
 // Load Razorpay script
