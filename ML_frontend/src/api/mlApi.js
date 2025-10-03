@@ -8,6 +8,7 @@ const API_TIMEOUT = 30000; // 30 seconds for ML predictions
 const mlApi = axios.create({
   baseURL: ML_API_BASE_URL,
   timeout: API_TIMEOUT,
+  adapter: 'xhr', // Force XMLHttpRequest instead of fetch to avoid polyfill issues
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

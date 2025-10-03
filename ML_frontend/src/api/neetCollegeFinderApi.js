@@ -9,6 +9,7 @@ const API_TIMEOUT = env.API_TIMEOUT;
 const neetApi = axios.create({
   baseURL: NEET_API_BASE_URL,
   timeout: API_TIMEOUT,
+  adapter: 'xhr', // Force XMLHttpRequest instead of fetch to avoid polyfill issues
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
