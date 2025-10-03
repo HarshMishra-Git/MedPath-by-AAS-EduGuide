@@ -43,8 +43,7 @@ export default defineConfig({
       'react', 
       'react-dom', 
       'framer-motion', 
-      'lucide-react',
-      'whatwg-fetch'
+      'lucide-react'
     ],
     esbuildOptions: {
       // Node.js global to browser globalThis
