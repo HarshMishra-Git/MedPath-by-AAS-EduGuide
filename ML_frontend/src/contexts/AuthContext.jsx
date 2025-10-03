@@ -9,6 +9,7 @@ const API_BASE = import.meta.env.VITE_AUTH_API_URL || 'http://localhost:5000/api
 // Create axios instance for auth
 const authAxios = axios.create({
   baseURL: API_BASE,
+  adapter: 'xhr', // Force XMLHttpRequest instead of fetch to avoid polyfill issues
   headers: {
     'Content-Type': 'application/json',
   },
