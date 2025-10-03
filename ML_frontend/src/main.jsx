@@ -1,31 +1,10 @@
-// Polyfills are handled in index.html - DO NOT import here to avoid build issues
+// CRITICAL: Import polyfills FIRST before any other dependencies
+import './polyfills.js';
+
 import axios from 'axios';
 
 // CRITICAL: Force ALL axios instances to use XHR adapter globally
 axios.defaults.adapter = 'xhr';
-
-// Ensure Request/Response are available (fallback to simple objects)
-if (typeof globalThis.Request === 'undefined') {
-  globalThis.Request = class Request {
-    constructor(input, init = {}) {
-      this.url = typeof input === 'string' ? input : input.url;
-      this.method = init.method || 'GET';
-      this.headers = init.headers || {};
-      this.body = init.body;
-    }
-  };
-}
-
-if (typeof globalThis.Response === 'undefined') {
-  globalThis.Response = class Response {
-    constructor(body, init = {}) {
-      this.body = body;
-      this.status = init.status || 200;
-      this.ok = this.status >= 200 && this.status < 300;
-    }
-    json() { return Promise.resolve(JSON.parse(this.body)); }
-  };
-}
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
