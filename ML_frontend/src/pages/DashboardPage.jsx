@@ -18,6 +18,7 @@ import {
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import PaymentModal from '../components/payment/PaymentModal';
+import BackendHealthMonitor from '../components/dashboard/BackendHealthMonitor';
 
 const DashboardPage = () => {
   const { user, logout, checkAuth } = useAuth();
@@ -281,13 +282,24 @@ const DashboardPage = () => {
           </motion.div>
         </div>
 
-        {/* Account Security */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6"
-        >
+        {/* Backend Health Monitor & Account Security */}
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Backend Health */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <BackendHealthMonitor />
+          </motion.div>
+
+          {/* Account Security */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6"
+          >
           <div className="flex items-center gap-3 mb-4">
             <Shield className="w-6 h-6 text-blue-600" />
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">
@@ -314,7 +326,8 @@ const DashboardPage = () => {
               </p>
             </div>
           </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Payment Modal */}
