@@ -385,7 +385,9 @@ class UltimateNEETCollegeFinder:
     """Ultimate College Finder with AI-Powered Features"""
     
     def __init__(self):
-        self.data_path = Path("D:/DESKTOP-L/College Finder/data/raw")
+        # Get data path relative to this file for production compatibility
+        base_path = Path(__file__).parent.parent
+        self.data_path = base_path / "data" / "raw"
         self.neet_data = {}
         self.ml_engine = MLPredictionEngine()
         self.cache = {}  # In-memory cache (use Redis in production)
