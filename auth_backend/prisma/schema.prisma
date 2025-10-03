@@ -1,0 +1,156 @@
+// Prisma Schema for MedPath Authentication & Payment API
+// Database: Neon PostgreSQL (Serverless)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Model
+model User {
+  id                String    @id @default(uuid())
+  email             String?   @unique
+  phone             String?   @unique
+  fullName          String    @map("full_name")
+  passwordHash      String?   @map("password_hash")
+  googleId          String?   @unique @map("google_id")
+  profilePicture    String?   @map("profile_picture")
+  
+  // Verification Status
+  emailVerified     Boolean   @default(false) @map("email_verified")
+  phoneVerified     Boolean   @default(false) @map("phone_verified")
+  
+  // Payment Status
+  paymentStatus     PaymentStatus @default(PENDING) @map("payment_status")
+  paymentAmount     Decimal   @default(1199.00) @map("payment_amount") @db.Decimal(10, 2)
+  paymentId         String?   @map("payment_id")
+  razorpayOrderId   String?   @map("razorpay_order_id")
+  razorpaySignature String?   @map("razorpay_signature")
+  paymentDate       DateTime? @map("payment_date")
+  
+  // Account Status
+  accountStatus     AccountStatus @default(PENDING_PAYMENT) @map("account_status")
+  subscriptionType  String    @default("one_time") @map("subscription_type")
+  
+  // Metadata
+  registrationMethod String?  @map("registration_method")
+  lastLogin         DateTime? @map("last_login")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  
+  // Relations
+  sessions          Session[]
+  predictions       UserPrediction[]
+  payments          PaymentTransaction[]
+  
+  @@index([email])
+  @@index([phone])
+  @@index([googleId])
+  @@index([paymentStatus])
+  @@map("users")
+}
+
+// Session Model
+model Session {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  token        String   @unique
+  refreshToken String?  @unique @map("refresh_token")
+  ipAddress    String?  @map("ip_address")
+  userAgent    String?  @map("user_agent")
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// User Prediction Metadata Model (lightweight tracking)
+model UserPrediction {
+  id                  String   @id @default(uuid())
+  userId              String   @map("user_id")
+  predictionTimestamp DateTime @default(now()) @map("prediction_timestamp")
+  predictionType      String   @map("prediction_type") // UG or PG
+  neetRank            Int      @map("neet_rank")
+  category            String
+  
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([predictionTimestamp])
+  @@map("user_predictions")
+}
+
+// Payment Transaction Model
+model PaymentTransaction {
+  id                  String          @id @default(uuid())
+  userId              String          @map("user_id")
+  razorpayPaymentId   String?         @unique @map("razorpay_payment_id")
+  razorpayOrderId     String?         @map("razorpay_order_id")
+  razorpaySignature   String?         @map("razorpay_signature")
+  amount              Decimal         @db.Decimal(10, 2)
+  currency            String          @default("INR")
+  status              TransactionStatus
+  paymentMethod       String?         @map("payment_method")
+  errorCode           String?         @map("error_code")
+  errorDescription    String?         @map("error_description")
+  createdAt           DateTime        @default(now()) @map("created_at")
+  updatedAt           DateTime        @updatedAt @map("updated_at")
+  
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([status])
+  @@index([razorpayPaymentId])
+  @@map("payment_transactions")
+}
+
+// Enums
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum AccountStatus {
+  PENDING_PAYMENT
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum TransactionStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+// OTP Model for verification
+model OTP {
+  id         String   @id @default(uuid())
+  identifier String   @unique // email or phone
+  code       String
+  type       String   // 'email' or 'sms'
+  attempts   Int      @default(0)
+  verified   Boolean  @default(false)
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  
+  @@index([identifier])
+  @@index([expiresAt])
+  @@map("otps")
+}

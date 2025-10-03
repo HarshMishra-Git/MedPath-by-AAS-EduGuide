@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <!-- Graduation cap -->
+    <path id="cap" d="M50 80 L150 50 L250 80 L200 95 L150 110 L100 95 Z"/>
+    <!-- Letter A shapes -->
+    <path id="letter-a1" d="M80 180 L120 80 L140 80 L180 180 L160 180 L150 150 L110 150 L100 180 Z M120 120 L140 120 L150 140 L110 140 Z"/>
+    <path id="letter-a2" d="M80 180 L120 80 L140 80 L180 180 L160 180 L150 150 L110 150 L100 180 Z M120 120 L140 120 L150 140 L110 140 Z"/>
+  </defs>
+  
+  <!-- Main logo content -->
+  <g id="aas-logo">
+    <!-- Graduation cap -->
+    <use href="#cap" fill="#1e3a8a" opacity="0.9"/>
+    
+    <!-- A letters -->
+    <g fill="#22c55e" opacity="0.9">
+      <use href="#letter-a1" transform="translate(0,0)"/>
+      <use href="#letter-a2" transform="translate(40,0)"/>
+    </g>
+    
+    <!-- AAS text -->
+    <text x="300" y="120" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#1e3a8a">AAS</text>
+    
+    <!-- EDUGUIDE text -->
+    <text x="300" y="180" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#22c55e">EDUGUIDE</text>
+    
+    <!-- Tagline -->
+    <text x="300" y="220" font-family="Arial, sans-serif" font-size="24" font-weight="normal" fill="#1e3a8a">Your Career is Our Concern</text>
+  </g>
+</svg>

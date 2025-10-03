@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>MedPath by AAS EduGuide - Find Your Perfect Medical College</title>
+    <meta name="title" content="MedPath by AAS EduGuide - Find Your Perfect Medical College">
+    <meta name="description" content="MedPath by AAS EduGuide - AI-powered NEET college finder for UG & PG admissions. Discover your ideal medical college with intelligent matching and expert guidance.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://medpath.aasedutech.com/">
+    <meta property="og:title" content="MedPath by AAS EduGuide - Find Your Perfect Medical College">
+    <meta property="og:description" content="MedPath by AAS EduGuide - AI-powered NEET college finder for UG & PG admissions. Discover your ideal medical college with intelligent matching and expert guidance.">
+    <meta property="og:image" content="/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://medpath.aasedutech.com/">
+    <meta property="twitter:title" content="MedPath by AAS EduGuide - Find Your Perfect Medical College">
+    <meta property="twitter:description" content="MedPath by AAS EduGuide - AI-powered NEET college finder for UG & PG admissions. Discover your ideal medical college with intelligent matching and expert guidance.">
+    <meta property="twitter:image" content="/twitter-image.png">
+    
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#0ea5e9" />
+    <meta name="msapplication-TileColor" content="#0ea5e9" />
+    
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts - Premium Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Performance Optimizations -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
+    <style>
+      /* Critical CSS for preventing layout shift */
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden;
+      }
+      
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* Loading animation */
+      .app-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 50%, #22c55e 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* Hide loading when React takes over */
+      .react-loaded .app-loading {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased">
+    <!-- Loading Screen -->
+    <div class="app-loading">
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- React App Root -->
+    <div id="root"></div>
+    
+    <!-- React App Script -->
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Mark React as loaded -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+          document.body.classList.add('react-loaded');
+        }, 100);
+      });
+    </script>
+  </body>
+</html>

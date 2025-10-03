@@ -1,1 +1,0 @@
-# Models scripts package
