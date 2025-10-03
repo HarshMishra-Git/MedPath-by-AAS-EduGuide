@@ -1,5 +1,9 @@
 // Import fetch polyfill FIRST - before any other imports
 import 'whatwg-fetch';
+import axios from 'axios';
+
+// CRITICAL: Force ALL axios instances to use XHR adapter globally
+axios.defaults.adapter = 'xhr';
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
