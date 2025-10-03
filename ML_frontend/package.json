@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3001",
-    "build": "vite build",
+    "prebuild": "echo '🧹 Cleaning Vite cache...'",
+    "build": "vite build --force",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "postinstall": "echo '✅ Clean install completed - no react-spring'"
