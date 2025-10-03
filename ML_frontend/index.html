@@ -45,6 +45,50 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
+    <!-- CRITICAL: Polyfills MUST load before ANY other JavaScript -->
+    <script>
+      // Polyfill Request and Response immediately
+      (function() {
+        if (typeof window.Request === 'undefined') {
+          window.Request = globalThis.Request = class Request {
+            constructor(input, init = {}) {
+              this.url = typeof input === 'string' ? input : input.url;
+              this.method = init.method || 'GET';
+              this.headers = init.headers || {};
+              this.body = init.body;
+              this.credentials = init.credentials || 'same-origin';
+              this.cache = init.cache || 'default';
+              this.mode = init.mode || 'cors';
+            }
+            clone() {
+              return new Request(this.url, this);
+            }
+          };
+        }
+        
+        if (typeof window.Response === 'undefined') {
+          window.Response = globalThis.Response = class Response {
+            constructor(body, init = {}) {
+              this.body = body;
+              this.status = init.status || 200;
+              this.statusText = init.statusText || '';
+              this.headers = init.headers || {};
+              this.ok = this.status >= 200 && this.status < 300;
+            }
+            clone() {
+              return new Response(this.body, this);
+            }
+            json() {
+              return Promise.resolve(JSON.parse(this.body));
+            }
+            text() {
+              return Promise.resolve(String(this.body));
+            }
+          };
+        }
+      })();
+    </script>
+    
     <style>
       /* Critical CSS for preventing layout shift */
       html, body {
