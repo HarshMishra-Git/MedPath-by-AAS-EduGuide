@@ -18,7 +18,7 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          animations: ['framer-motion', 'react-spring'],
+          animations: ['framer-motion'],
           charts: ['recharts', 'react-circular-progressbar'],
         }
       }
