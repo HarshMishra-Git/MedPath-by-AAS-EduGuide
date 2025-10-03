@@ -6,6 +6,11 @@ export default defineConfig({
   plugins: [
     react()
   ],
+  // Add polyfills for Node.js globals
+  define: {
+    'process.env': {},
+    global: 'globalThis',
+  },
   base: '/',
   server: {
     port: 3001,
@@ -27,10 +32,10 @@ export default defineConfig({
     },
     commonjsOptions: {
       transformMixedEsModules: true,
-    }
-  },
-  define: {
-    global: 'globalThis',
+      ignoreDynamicRequires: true,
+    },
+    target: 'es2015',
+    minify: 'esbuild',
   },
   resolve: {
     alias: {

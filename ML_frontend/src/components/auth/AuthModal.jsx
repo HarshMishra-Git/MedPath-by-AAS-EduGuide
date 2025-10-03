@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from './GoogleOAuthStub.jsx';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { toast } from 'react-hot-toast';

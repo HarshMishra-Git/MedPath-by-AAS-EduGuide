@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, LogIn, Loader2, Phone } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '../components/auth/GoogleOAuthStub.jsx';
 import toast from 'react-hot-toast';
 import PaymentModal from '../components/payment/PaymentModal';
 
