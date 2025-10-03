@@ -30,6 +30,7 @@
     "react-loading-skeleton": "^3.3.1",
     "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^6.15.0",
+    "react-spring": "^9.7.3",
     "recharts": "^2.8.0",
     "typed.js": "^2.0.16",
     "zod": "^3.22.2"
