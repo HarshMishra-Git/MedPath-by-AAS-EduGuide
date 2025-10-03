@@ -18,16 +18,31 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          animations: ['framer-motion', 'react-spring', 'three'],
+          animations: ['framer-motion', 'react-spring'],
           charts: ['recharts', 'react-circular-progressbar'],
         }
       }
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true,
     }
   },
   define: {
     global: 'globalThis',
   },
+  resolve: {
+    alias: {
+      // Polyfill for Request/Response objects if needed
+      'node-fetch': 'isomorphic-fetch',
+    },
+  },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'framer-motion', 'lucide-react']
+    include: ['react', 'react-dom', 'framer-motion', 'lucide-react'],
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis'
+      },
+    },
   }
 })
