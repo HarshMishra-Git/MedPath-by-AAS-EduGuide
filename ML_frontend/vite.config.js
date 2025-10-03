@@ -37,7 +37,13 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'framer-motion', 'lucide-react'],
+    include: [
+      'react', 
+      'react-dom', 
+      'framer-motion', 
+      'lucide-react',
+      'whatwg-fetch'
+    ],
     esbuildOptions: {
       // Node.js global to browser globalThis
       define: {

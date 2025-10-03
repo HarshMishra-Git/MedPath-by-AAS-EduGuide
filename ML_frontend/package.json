@@ -34,6 +34,7 @@
     "react-router-dom": "^6.15.0",
     "recharts": "^2.8.0",
     "typed.js": "^2.0.16",
+    "whatwg-fetch": "^3.6.20",
     "zod": "^3.22.2"
   },
   "devDependencies": {
