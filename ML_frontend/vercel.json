@@ -4,7 +4,7 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!site\.webmanifest|favicon|apple-touch-icon|android-chrome).*)",
       "destination": "/index.html"
     }
   ],
