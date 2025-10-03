@@ -5,6 +5,75 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- CRITICAL: Polyfills MUST load first -->
+    <script>
+      // Force polyfills to load synchronously BEFORE any other code
+      (function() {
+        'use strict';
+        
+        // Polyfill Request
+        if (typeof globalThis.Request === 'undefined') {
+          globalThis.Request = window.Request = class Request {
+            constructor(input, init) {
+              init = init || {};
+              this.url = typeof input === 'string' ? input : (input ? input.url : '');
+              this.method = init.method || 'GET';
+              this.headers = init.headers || {};
+              this.body = init.body;
+              this.credentials = init.credentials || 'same-origin';
+              this.cache = init.cache || 'default';
+              this.mode = init.mode || 'cors';
+            }
+            clone() {
+              return new Request(this.url, this);
+            }
+          };
+        }
+        
+        // Polyfill Response
+        if (typeof globalThis.Response === 'undefined') {
+          globalThis.Response = window.Response = class Response {
+            constructor(body, init) {
+              init = init || {};
+              this.body = body;
+              this.status = init.status || 200;
+              this.statusText = init.statusText || '';
+              this.headers = init.headers || {};
+              this.ok = this.status >= 200 && this.status < 300;
+            }
+            clone() {
+              return new Response(this.body, this);
+            }
+            json() {
+              return Promise.resolve(JSON.parse(this.body));
+            }
+            text() {
+              return Promise.resolve(String(this.body));
+            }
+          };
+        }
+        
+        // Polyfill Headers
+        if (typeof globalThis.Headers === 'undefined') {
+          globalThis.Headers = window.Headers = class Headers {
+            constructor(init) {
+              this._headers = {};
+              if (init) {
+                for (var key in init) {
+                  this._headers[key.toLowerCase()] = init[key];
+                }
+              }
+            }
+            get(name) { return this._headers[name.toLowerCase()]; }
+            set(name, value) { this._headers[name.toLowerCase()] = value; }
+            has(name) { return name.toLowerCase() in this._headers; }
+          };
+        }
+        
+        console.log('✅ Critical polyfills loaded in HEAD');
+      })();
+    </script>
+    
     <!-- Primary Meta Tags -->
     <title>MedPath by AAS EduGuide - Find Your Perfect Medical College</title>
     <meta name="title" content="MedPath by AAS EduGuide - Find Your Perfect Medical College">
@@ -45,49 +114,6 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
-    <!-- CRITICAL: Polyfills MUST load before ANY other JavaScript -->
-    <script>
-      // Polyfill Request and Response immediately
-      (function() {
-        if (typeof window.Request === 'undefined') {
-          window.Request = globalThis.Request = class Request {
-            constructor(input, init = {}) {
-              this.url = typeof input === 'string' ? input : input.url;
-              this.method = init.method || 'GET';
-              this.headers = init.headers || {};
-              this.body = init.body;
-              this.credentials = init.credentials || 'same-origin';
-              this.cache = init.cache || 'default';
-              this.mode = init.mode || 'cors';
-            }
-            clone() {
-              return new Request(this.url, this);
-            }
-          };
-        }
-        
-        if (typeof window.Response === 'undefined') {
-          window.Response = globalThis.Response = class Response {
-            constructor(body, init = {}) {
-              this.body = body;
-              this.status = init.status || 200;
-              this.statusText = init.statusText || '';
-              this.headers = init.headers || {};
-              this.ok = this.status >= 200 && this.status < 300;
-            }
-            clone() {
-              return new Response(this.body, this);
-            }
-            json() {
-              return Promise.resolve(JSON.parse(this.body));
-            }
-            text() {
-              return Promise.resolve(String(this.body));
-            }
-          };
-        }
-      })();
-    </script>
     
     <style>
       /* Critical CSS for preventing layout shift */
@@ -146,65 +172,6 @@
     <!-- React App Root -->
     <div id="root"></div>
     
-    <!-- Polyfills for Request/Response - Must run before modules load -->
-    <script>
-      // Polyfill for Request if not available
-      if (typeof globalThis.Request === 'undefined') {
-        globalThis.Request = class Request {
-          constructor(input, init) {
-            this.url = typeof input === 'string' ? input : input.url;
-            this.method = (init && init.method) || 'GET';
-            this.headers = (init && init.headers) || {};
-            this.body = init && init.body;
-            this.credentials = (init && init.credentials) || 'same-origin';
-            this.cache = (init && init.cache) || 'default';
-            this.mode = (init && init.mode) || 'cors';
-          }
-          clone() {
-            return new Request(this.url, {
-              method: this.method,
-              headers: this.headers,
-              body: this.body,
-              credentials: this.credentials,
-              cache: this.cache,
-              mode: this.mode
-            });
-          }
-        };
-      }
-      
-      // Polyfill for Response if not available
-      if (typeof globalThis.Response === 'undefined') {
-        globalThis.Response = class Response {
-          constructor(body, init) {
-            this.body = body;
-            this.status = (init && init.status) || 200;
-            this.statusText = (init && init.statusText) || '';
-            this.headers = (init && init.headers) || {};
-            this.ok = this.status >= 200 && this.status < 300;
-          }
-          clone() {
-            return new Response(this.body, {
-              status: this.status,
-              statusText: this.statusText,
-              headers: this.headers
-            });
-          }
-          json() {
-            return Promise.resolve(JSON.parse(this.body));
-          }
-          text() {
-            return Promise.resolve(String(this.body));
-          }
-        };
-      }
-      
-      // Also ensure window has these
-      if (typeof window !== 'undefined') {
-        window.Request = window.Request || globalThis.Request;
-        window.Response = window.Response || globalThis.Response;
-      }
-    </script>
     
     <!-- React App Script -->
     <script type="module" src="/src/main.jsx"></script>
