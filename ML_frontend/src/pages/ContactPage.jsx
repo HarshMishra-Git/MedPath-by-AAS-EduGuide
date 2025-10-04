@@ -363,16 +363,16 @@ const ContactInfo = () => {
     {
       icon: MessageSquare,
       title: 'Live Chat',
-      details: 'Chat with our AI assistant',
+      details: 'Chat with us',
       description: 'Get instant answers to common questions about predictions and features.',
-      link: '#',
+      link: 'wa.me/+9197636379',
       responseTime: 'Available 24/7'
     },
     {
       icon: MapPin,
       title: 'Office Address',
-      details: 'Tech Hub, Innovation District',
-      description: 'Bangalore, Karnataka 560001, India',
+      details: 'AAS EduGuide',
+      description: 'Kakadeo, Kanpur 208005, India',
       link: '#',
       responseTime: 'Visit by appointment only'
     }
