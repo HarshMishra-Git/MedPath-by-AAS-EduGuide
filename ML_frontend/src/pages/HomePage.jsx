@@ -254,12 +254,12 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
                 MedPath
               </motion.span>
               <motion.span 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
                 className="text-gray-900 relative"
               >
-                Find Your
+                Find Your Perfect
                 <motion.div
                   className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent"
                   animate={{ scaleX: [0, 1, 0], opacity: [0, 1, 0] }}
@@ -267,16 +267,8 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
                 />
               </motion.span>
               <motion.span 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 }}
-                className="text-gray-900 relative"
-              >
-                Perfect
-              </motion.span>
-              <motion.span 
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
                 className="bg-gradient-to-r from-medical-600 via-success-600 to-medical-700 bg-clip-text text-transparent"
                 style={{ textShadow: '0 0 30px rgba(132, 204, 22, 0.3)' }}
