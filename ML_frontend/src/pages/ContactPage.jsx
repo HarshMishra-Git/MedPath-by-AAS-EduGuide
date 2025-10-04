@@ -365,7 +365,7 @@ const ContactInfo = () => {
       title: 'Live Chat',
       details: 'Chat with us',
       description: 'Get instant answers to common questions about predictions and features.',
-      link: 'wa.me/+9197636379',
+      link: 'https://api.whatsapp.com/send/?phone=%2B919721636379&text&type=phone_number&app_absent=0',
       responseTime: 'Available 24/7'
     },
     {
