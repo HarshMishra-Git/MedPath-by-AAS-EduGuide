@@ -139,9 +139,27 @@ export const AuthProvider = ({ children }) => {
 
   const sendOTP = async (type, identifier) => {
     try {
+      console.log('📧 Sending OTP:', { type, identifier, endpoint: `${API_BASE}/auth/send-otp` });
       const response = await authAxios.post('/auth/send-otp', { type, identifier });
+      console.log('✅ OTP Response:', response.data);
+      
+      // Log success for debugging
+      if (response.data.success) {
+        console.log('✅ OTP sent successfully');
+        if (response.data.otp && import.meta.env.DEV) {
+          console.log('🔑 Development OTP:', response.data.otp);
+        }
+      }
+      
       return response.data;
     } catch (error) {
+      console.error('❌ OTP Send Error:', {
+        status: error.response?.status,
+        message: error.response?.data?.message,
+        data: error.response?.data,
+        url: error.config?.url
+      });
+      
       const message = error.response?.data?.message || 'Failed to send OTP';
       throw new Error(message);
     }
@@ -149,9 +167,17 @@ export const AuthProvider = ({ children }) => {
 
   const verifyOTP = async (identifier, otp, type) => {
     try {
+      console.log('🔐 Verifying OTP:', { identifier, otp: otp.substring(0, 2) + '****', type });
       const response = await authAxios.post('/auth/verify-otp', { identifier, otp, type });
+      console.log('✅ OTP Verification Response:', response.data);
       return response.data;
     } catch (error) {
+      console.error('❌ OTP Verification Error:', {
+        status: error.response?.status,
+        message: error.response?.data?.message,
+        data: error.response?.data
+      });
+      
       const message = error.response?.data?.message || 'OTP verification failed';
       throw new Error(message);
     }

@@ -5,6 +5,7 @@ import { Mail, Lock, User, Phone, Eye, EyeOff, UserPlus, Loader2, CheckCircle, S
 import { useAuth } from '../contexts/AuthContext';
 import { GoogleLogin } from '../components/auth/GoogleOAuthStub.jsx';
 import PaymentModal from '../components/payment/PaymentModal';
+import OTPDebugger from '../components/debug/OTPDebugger';
 import toast from 'react-hot-toast';
 
 const SignupPage = () => {
@@ -561,6 +562,13 @@ const SignupPage = () => {
                       </Link>
                     </label>
                   </div>
+
+                  {/* OTP Debugger (Dev Only) */}
+                  <OTPDebugger 
+                    email={formData.email} 
+                    phone={formData.phone}
+                    identifierType={identifierType}
+                  />
 
                   {/* Submit Button */}
                   <button
