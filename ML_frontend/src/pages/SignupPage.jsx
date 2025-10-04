@@ -122,15 +122,31 @@ const SignupPage = () => {
         // If OTP send fails, try to still proceed (dev mode fallback)
         console.error('OTP send error:', otpError);
         
+        const errorMessage = otpError.message || 'Unknown error';
+        const isRateLimited = errorMessage.toLowerCase().includes('rate') || 
+                             errorMessage.toLowerCase().includes('too many') ||
+                             errorMessage.toLowerCase().includes('limit');
+        
         if (import.meta.env.DEV) {
           // In development, allow proceeding without OTP
-          toast(
-            <div>
-              <div className="font-bold">⚠️ Development Mode</div>
-              <div className="text-sm mt-1">OTP service unavailable. Use: <span className="font-bold">123456</span></div>
-            </div>,
-            { id: 'otp-send', duration: 10000, icon: '🔧' }
-          );
+          if (isRateLimited) {
+            toast(
+              <div>
+                <div className="font-bold text-yellow-600">\u26a0\ufe0f Rate Limit Reached</div>
+                <div className="text-sm mt-1">Backend is rate-limited. Use bypass OTP: <span className="font-bold text-green-600">123456</span></div>
+              </div>,
+              { id: 'otp-send', duration: 15000, icon: '\ud83d\udd27' }
+            );
+          } else {
+            toast(
+              <div>
+                <div className="font-bold">\ud83d\udd27 Development Mode</div>
+                <div className="text-sm mt-1">{errorMessage}</div>
+                <div className="text-sm mt-2">Use bypass OTP: <span className="font-bold text-green-600">123456</span></div>
+              </div>,
+              { id: 'otp-send', duration: 15000 }
+            );
+          }
           setStep(2);
           setOtpTimer(60);
         } else {
@@ -580,9 +596,26 @@ const SignupPage = () => {
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                   Verify Your Account
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
                   Enter the 6-digit code sent to your {identifierType}
                 </p>
+                
+                {/* Development Mode Notice */}
+                {import.meta.env.DEV && (
+                  <div className="mb-4 p-4 bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 border-2 border-yellow-400 dark:border-yellow-600 rounded-xl">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <span className="text-2xl">🔧</span>
+                      <span className="font-bold text-gray-900 dark:text-white">Development Mode</span>
+                    </div>
+                    <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                      Email service may be unavailable or rate-limited.
+                    </div>
+                    <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border-2 border-yellow-500">
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Use bypass OTP:</div>
+                      <div className="text-3xl font-bold text-green-600 dark:text-green-400 tracking-wider">123456</div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="space-y-4">
                   <input
