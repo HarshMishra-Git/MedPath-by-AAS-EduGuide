@@ -258,21 +258,28 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-gray-900 relative"
+                className="text-gray-900 relative block"
               >
-                Find Your Perfect
+                Find Your
                 <motion.div
                   className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent"
                   animate={{ scaleX: [0, 1, 0], opacity: [0, 1, 0] }}
                   transition={{ duration: 3, repeat: Infinity, delay: 1 }}
                 />
               </motion.span>
-              <br />
+              <motion.span 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                className="text-gray-900 relative block"
+              >
+                Perfect
+              </motion.span>
               <motion.span 
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7 }}
-                className="inline-block bg-gradient-to-r from-medical-600 via-success-600 to-medical-700 bg-clip-text text-transparent"
+                className="block bg-gradient-to-r from-medical-600 via-success-600 to-medical-700 bg-clip-text text-transparent"
                 style={{ textShadow: '0 0 30px rgba(132, 204, 22, 0.3)' }}
               >
                 Medical College
@@ -287,7 +294,7 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
             transition={{ delay: 0.9 }}
             className="relative max-w-4xl mx-auto mb-12"
           >
-            <motion.p className="text-lg sm:text-xl lg:text-2xl text-gray-600 font-sans leading-relaxed">
+            <motion.p className="text-lg sm:text-xl lg:text-2xl text-gray-600 font-sans leading-relaxed text-justify">
               Discover your{' '}
               <span className="relative inline-block font-semibold text-medical-600">
                 ideal medical college
@@ -456,7 +463,7 @@ const FeaturesSection = () => {
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-4">
             Why Choose Our <span className="text-gradient-primary">ML Predictor</span>?
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto text-justify">
             Built with cutting-edge technology and years of admission data analysis
           </p>
         </motion.div>
@@ -485,7 +492,7 @@ const FeatureCard = ({ feature, index }) => {
       <h3 className="text-2xl font-display font-bold text-gray-900 mb-4">
         {feature.title}
       </h3>
-      <p className="text-gray-600 leading-relaxed">
+      <p className="text-gray-600 leading-relaxed text-justify">
         {feature.description}
       </p>
     </div>
@@ -563,7 +570,7 @@ const HowItWorksSection = () => {
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-4">
             How It Works
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto text-justify">
             Simple 3-step process to discover your perfect medical college
           </p>
         </motion.div>
@@ -602,7 +609,7 @@ const HowItWorksSection = () => {
                 <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-center leading-relaxed">
+                <p className="text-gray-600 text-center leading-relaxed text-justify">
                   {step.description}
                 </p>
               </div>

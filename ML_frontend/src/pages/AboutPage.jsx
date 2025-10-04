@@ -69,7 +69,7 @@ const HeroSection = () => {
               <span className="text-gradient-neural">Predictor</span>
             </h1>
             
-            <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed text-justify">
               Revolutionary AI-powered platform that transforms NEET college admission predictions 
               using advanced machine learning algorithms and comprehensive data analysis.
             </p>
@@ -164,7 +164,7 @@ const TechnologySection = () => {
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-4">
             Our <span className="text-gradient-primary">Technology Stack</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto text-justify">
             Built with cutting-edge technologies and industry best practices for reliability, 
             scalability, and performance.
           </p>
@@ -248,7 +248,7 @@ const MLModelsSection = () => {
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-4">
             Advanced <span className="text-gradient-neural">ML Models</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto text-justify">
             Our ensemble approach combines multiple state-of-the-art models for maximum accuracy and reliability.
           </p>
         </motion.div>
@@ -271,7 +271,7 @@ const MLModelsSection = () => {
                   {model.accuracy}
                 </span>
               </div>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 leading-relaxed text-justify">
                 {model.description}
               </p>
               <div>
@@ -340,7 +340,7 @@ const FeaturesSection = () => {
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-4">
             Platform <span className="text-gradient-primary">Features</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto text-justify">
             Comprehensive suite of features designed for students, counselors, and educational institutions.
           </p>
         </motion.div>
@@ -361,7 +361,7 @@ const FeaturesSection = () => {
               <h3 className="text-lg font-display font-bold text-gray-900 mb-3">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-gray-600 text-sm leading-relaxed text-justify">
                 {feature.description}
               </p>
             </motion.div>

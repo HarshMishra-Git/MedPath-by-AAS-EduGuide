@@ -74,7 +74,7 @@ const HeroSection = () => {
               Get in <span className="text-gradient-primary">Touch</span>
             </h1>
             
-            <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed text-justify">
               Have questions about our ML predictions? Need technical support? Want to partner with us? 
               We're here to help you succeed in your NEET journey.
             </p>
@@ -169,7 +169,7 @@ const ContactForm = () => {
         <h2 className="text-3xl font-display font-bold text-gray-900 mb-4">
           Send us a Message
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-600 text-justify">
           Fill out the form below and we'll respond as soon as possible. All fields marked with * are required.
         </p>
       </div>
