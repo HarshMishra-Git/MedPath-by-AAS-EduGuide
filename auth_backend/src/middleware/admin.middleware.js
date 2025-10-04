@@ -29,6 +29,7 @@ const adminAuthMiddleware = async (req, res, next) => {
     });
 
     if (!session) {
+      console.error('❌ Admin auth failed: Session not found for token');
       return res.status(401).json({
         success: false,
         message: 'Invalid session. Please login again.'
@@ -53,6 +54,7 @@ const adminAuthMiddleware = async (req, res, next) => {
 
     // Check if user has admin role
     if (session.user.role !== 'ADMIN' && session.user.role !== 'SUPER_ADMIN') {
+      console.error(`❌ Admin auth failed: User ${session.user.email} has role ${session.user.role}`);
       return res.status(403).json({
         success: false,
         message: 'Access denied. Admin privileges required.'
@@ -71,6 +73,7 @@ const adminAuthMiddleware = async (req, res, next) => {
 
     next();
   } catch (error) {
+    console.error('❌ Admin auth error:', error.message);
     return res.status(401).json({
       success: false,
       message: error.message || 'Authentication failed'

@@ -12,6 +12,9 @@ const { setupAdminUser } = require('./utils/setup-admin');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust proxy for Render deployment
+app.set('trust proxy', 1);
+
 // Security Middleware
 app.use(helmet());
 
