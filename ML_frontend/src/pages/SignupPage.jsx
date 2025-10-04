@@ -94,7 +94,7 @@ const SignupPage = () => {
 
     setLoading(true);
     try {
-      // Step 1: Create user account FIRST (backend requires user to exist before sending OTP)
+      // Create user account and redirect directly to dashboard (OTP verification temporarily disabled)
       toast.loading('Creating your account...', { id: 'signup' });
       
       const signupData = {
@@ -111,8 +111,24 @@ const SignupPage = () => {
       const signupResult = await signup(signupData);
       
       if (signupResult.success) {
-        toast.success('Account created! \u2713', { id: 'signup' });
+        toast.success('Account created successfully! \ud83c\udf89', { id: 'signup' });
         
+        // Show payment reminder
+        toast('Complete payment to unlock predictions', { 
+          icon: '\ud83d\udcb3',
+          duration: 5000,
+          style: {
+            background: '#3b82f6',
+            color: '#fff',
+          }
+        });
+        
+        // Redirect directly to dashboard (OTP verification temporarily disabled)
+        setTimeout(() => {
+          navigate('/dashboard', { replace: true });
+        }, 800);
+        
+        /* TEMPORARY: OTP verification disabled - will be re-enabled later
         // Step 2: Now send OTP for verification
         const identifier = identifierType === 'email' ? formData.email : formData.phone;
         toast.loading(`Sending verification OTP...`, { id: 'otp-send' });
@@ -146,7 +162,7 @@ const SignupPage = () => {
           if (import.meta.env.DEV) {
             toast(
               <div>
-                <div className="font-bold">\ud83d\udd27 Development Mode</div>
+                <div className="font-bold">🔧 Development Mode</div>
                 <div className="text-sm mt-1">{errorMessage}</div>
                 <div className="text-sm mt-2">Use bypass OTP: <span className="font-bold text-green-600">123456</span></div>
               </div>,
@@ -158,6 +174,7 @@ const SignupPage = () => {
           setStep(2);
           setOtpTimer(60);
         }
+        */
       }
     } catch (error) {
       console.error('Signup error:', error);
