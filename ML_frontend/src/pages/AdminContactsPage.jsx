@@ -76,7 +76,8 @@ const AdminContactsPage = () => {
   // Update submission status
   const updateStatus = async (id, status, notes = '') => {
     try {
-      await axios.patch(
+      console.log('Updating submission:', { id, status, notes })
+      const response = await axios.patch(
         `${AUTH_API_BASE_URL}/contact/submissions/${id}`,
         {
           status,
@@ -85,13 +86,17 @@ const AdminContactsPage = () => {
         },
         getAuthHeaders()
       )
+      console.log('Update response:', response.data)
       toast.success('Status updated successfully')
       fetchSubmissions()
       fetchStats()
       setSelectedSubmission(null)
     } catch (error) {
       console.error('Error updating status:', error)
-      toast.error('Failed to update status')
+      console.error('Error response:', error.response?.data)
+      console.error('Error status:', error.response?.status)
+      const errorMessage = error.response?.data?.message || 'Failed to update status'
+      toast.error(errorMessage)
     }
   }
 
