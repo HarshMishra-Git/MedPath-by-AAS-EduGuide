@@ -282,11 +282,11 @@ const TermsPage = () => {
                   If you have any questions or concerns about these Terms of Service, please contact us at:
                 </p>
                 <a 
-                  href="mailto:contact@alladmission.co.in" 
+                  href="mailto:akhilesh@aaseduguide.com" 
                   className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-semibold text-sm sm:text-base"
                 >
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>contact@alladmission.co.in</span>
+                  <span>akhilesh@aaseduguide.com</span>
                 </a>
               </div>
             </div>

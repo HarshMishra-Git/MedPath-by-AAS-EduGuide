@@ -347,9 +347,9 @@ const ContactInfo = () => {
     {
       icon: Mail,
       title: 'Email Support',
-      details: 'contact@alladmission.co.in',
+      details: 'akhilesh@aaseduguide.com',
       description: 'Get help with technical issues, account questions, or general inquiries.',
-      link: 'mailto:contact@alladmission.co.in',
+      link: 'mailto:akhilesh@aaseduguide.com',
       responseTime: 'Usually responds within 2-4 hours'
     },
     {

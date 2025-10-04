@@ -106,7 +106,7 @@ const FAQPage = () => {
       faqs: [
         {
           question: "What if I encounter an error or bug?",
-          answer: "If you experience any technical issues, please contact our support team at contact@alladmission.co.in with details about the problem, including screenshots if possible. Our team typically responds within 24 hours and works to resolve issues promptly."
+          answer: "If you experience any technical issues, please contact our support team at akhilesh@aaseduguide.com with details about the problem, including screenshots if possible. Our team typically responds within 24 hours and works to resolve issues promptly."
         },
         {
           question: "Which browsers are supported?",
@@ -308,11 +308,11 @@ const FAQPage = () => {
                   Can't find what you're looking for? Our support team is here to help!
                 </p>
                 <a 
-                  href="mailto:contact@alladmission.co.in" 
+                  href="mailto:akhilesh@aaseduguide.com" 
                   className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-semibold text-sm sm:text-base"
                 >
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>contact@alladmission.co.in</span>
+                  <span>akhilesh@aaseduguide.com</span>
                 </a>
               </div>
             </div>

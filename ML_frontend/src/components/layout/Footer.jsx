@@ -43,8 +43,8 @@ const Footer = () => {
     { 
       icon: Mail, 
       label: 'Email', 
-      value: 'contact@alladmission.co.in',
-      href: 'mailto:contact@alladmission.co.in'
+      value: 'akhilesh@aaseduguide.com',
+      href: 'mailto:akhilesh@aaseduguide.com'
     },
     { 
       icon: Phone, 
