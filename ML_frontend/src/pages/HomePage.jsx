@@ -239,9 +239,9 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
             transition={{ delay: 0.3 }}
             className="relative mb-6"
           >
-            <motion.h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-bold leading-tight">
+            <motion.h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-bold leading-tight flex flex-col items-center">
               <motion.span 
-                className="inline-block bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent"
+                className="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent"
                 animate={{ 
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                 }}
@@ -253,12 +253,11 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
               >
                 MedPath
               </motion.span>
-              <br />
               <motion.span 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-gray-900 relative block"
+                className="text-gray-900 relative"
               >
                 Find Your
                 <motion.div
@@ -271,7 +270,7 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 }}
-                className="text-gray-900 relative block"
+                className="text-gray-900 relative"
               >
                 Perfect
               </motion.span>
@@ -279,7 +278,7 @@ const HeroSection = ({ navigate, isAuthenticated, user }) => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7 }}
-                className="block bg-gradient-to-r from-medical-600 via-success-600 to-medical-700 bg-clip-text text-transparent"
+                className="bg-gradient-to-r from-medical-600 via-success-600 to-medical-700 bg-clip-text text-transparent"
                 style={{ textShadow: '0 0 30px rgba(132, 204, 22, 0.3)' }}
               >
                 Medical College
