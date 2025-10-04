@@ -24,6 +24,17 @@ import {
 
 const AUTH_API_BASE_URL = import.meta.env.VITE_AUTH_API_URL || 'http://localhost:5000/api'
 
+// Helper to get auth headers
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('token')
+  return {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+}
+
 const AdminContactsPage = () => {
   const [submissions, setSubmissions] = useState([])
   const [stats, setStats] = useState(null)
@@ -36,10 +47,11 @@ const AdminContactsPage = () => {
   // Fetch stats
   const fetchStats = async () => {
     try {
-      const response = await axios.get(`${AUTH_API_BASE_URL}/contact/stats`)
+      const response = await axios.get(`${AUTH_API_BASE_URL}/contact/stats`, getAuthHeaders())
       setStats(response.data.data)
     } catch (error) {
       console.error('Error fetching stats:', error)
+      toast.error('Failed to load statistics')
     }
   }
 
@@ -48,7 +60,10 @@ const AdminContactsPage = () => {
     try {
       setLoading(true)
       const params = filterStatus !== 'all' ? { status: filterStatus } : {}
-      const response = await axios.get(`${AUTH_API_BASE_URL}/contact/submissions`, { params })
+      const response = await axios.get(`${AUTH_API_BASE_URL}/contact/submissions`, {
+        params,
+        ...getAuthHeaders()
+      })
       setSubmissions(response.data.data)
     } catch (error) {
       console.error('Error fetching submissions:', error)
@@ -61,11 +76,15 @@ const AdminContactsPage = () => {
   // Update submission status
   const updateStatus = async (id, status, notes = '') => {
     try {
-      await axios.patch(`${AUTH_API_BASE_URL}/contact/submissions/${id}`, {
-        status,
-        notes,
-        resolvedBy: 'Admin' // Replace with actual admin user
-      })
+      await axios.patch(
+        `${AUTH_API_BASE_URL}/contact/submissions/${id}`,
+        {
+          status,
+          notes,
+          resolvedBy: 'Admin'
+        },
+        getAuthHeaders()
+      )
       toast.success('Status updated successfully')
       fetchSubmissions()
       fetchStats()
