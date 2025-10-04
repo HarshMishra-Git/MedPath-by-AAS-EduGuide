@@ -310,19 +310,76 @@ const DashboardPage = () => {
             <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <p className="text-sm text-gray-500 dark:text-gray-400">Registered</p>
               <p className="font-medium text-gray-900 dark:text-white mt-1">
-                {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+                {user?.createdAt ? (
+                  <>
+                    <span className="block text-base">
+                      {new Date(user.createdAt).toLocaleDateString('en-IN', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                      })}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {new Date(user.createdAt).toLocaleTimeString('en-IN', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
+                  </>
+                ) : (
+                  <span className="block text-base">
+                    {new Date().toLocaleDateString('en-IN', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric'
+                    })}
+                  </span>
+                )}
               </p>
             </div>
             <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <p className="text-sm text-gray-500 dark:text-gray-400">Last Login</p>
               <p className="font-medium text-gray-900 dark:text-white mt-1">
-                {user?.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'N/A'}
+                {user?.lastLogin ? (
+                  <>
+                    <span className="block text-base">
+                      {new Date(user.lastLogin).toLocaleDateString('en-IN', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                      })}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {new Date(user.lastLogin).toLocaleTimeString('en-IN', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="block text-base">
+                      {new Date().toLocaleDateString('en-IN', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                      })}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {new Date().toLocaleTimeString('en-IN', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
+                  </>
+                )}
               </p>
             </div>
             <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <p className="text-sm text-gray-500 dark:text-gray-400">Two-Factor Auth</p>
               <p className="font-medium text-gray-900 dark:text-white mt-1">
-                Not Enabled
+                <span className="block text-base text-yellow-600 dark:text-yellow-400">Not Enabled</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">Recommended</span>
               </p>
             </div>
           </div>
