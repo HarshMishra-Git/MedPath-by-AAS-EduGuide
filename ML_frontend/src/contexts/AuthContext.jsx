@@ -70,17 +70,18 @@ export const AuthProvider = ({ children }) => {
       const response = await authAxios.post('/auth/login', { email, password });
       
       if (response.data.success) {
-        const { token, refreshToken, data } = response.data;
+        const { data } = response.data;
+        const { token, refreshToken, user } = data;
         
         localStorage.setItem('token', token);
         localStorage.setItem('refreshToken', refreshToken);
         Cookies.set('token', token, { expires: 1 });
         
-        setUser(data.user);
+        setUser(user);
         setIsAuthenticated(true);
         
         toast.success('Login successful!');
-        return { success: true, data: data.user, message: response.data.message };
+        return { success: true, data: user, message: response.data.message };
       }
     } catch (error) {
       const message = error.response?.data?.message || 'Login failed';
