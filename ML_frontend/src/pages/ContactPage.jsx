@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import toast from 'react-hot-toast'
+import { contactApiService } from '../services/contactApi'
 import PaymentNotificationBanner from '../components/payment/PaymentNotificationBanner'
 import {
   Mail, 
@@ -134,16 +135,43 @@ const ContactForm = () => {
     setIsSubmitting(true)
     
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      toast.success('Message sent successfully! We\'ll get back to you within 24 hours.', {
-        duration: 5000
+      // Submit contact form using the contact API service
+      const response = await contactApiService.submitContact({
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        category: data.category,
+        message: data.message,
+        phone: data.phone || null,
+        organization: data.organization || null
       })
       
+      // Show success message with ticket ID if available
+      const successMessage = response.ticket_id 
+        ? `${response.message} Your ticket ID is: ${response.ticket_id}`
+        : response.message
+      
+      toast.success(successMessage, {
+        duration: 5000,
+        icon: '✅'
+      })
+      
+      // Log simulated submission in development
+      if (import.meta.env.DEV && response.simulated) {
+        console.log('📧 Contact form submission (simulated):', { data, response })
+      }
+      
+      // Reset form after successful submission
       reset()
     } catch (error) {
-      toast.error('Failed to send message. Please try again or contact us directly.')
+      console.error('Contact form submission error:', error)
+      
+      // Show user-friendly error message
+      const errorMessage = error.message || 'Failed to send message. Please try again or contact us directly.'
+      toast.error(errorMessage, {
+        duration: 6000,
+        icon: '❌'
+      })
     } finally {
       setIsSubmitting(false)
     }
