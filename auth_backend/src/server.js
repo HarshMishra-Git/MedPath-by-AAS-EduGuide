@@ -22,7 +22,9 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:4173',
   'https://neet-pg-college-finder.vercel.app',
-  'https://med-path-by-aas-edu-guide.vercel.app'
+  'https://med-path-by-aas-edu-guide.vercel.app',
+  'https://medpath.aaseduguide.com',
+  'http://medpath.aaseduguide.com'
 ].filter(Boolean);
 
 app.use(cors({
