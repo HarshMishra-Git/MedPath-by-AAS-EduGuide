@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.routes');
 const paymentRoutes = require('./routes/payment.routes');
 const contactRoutes = require('./routes/contact.routes');
+const { setupAdminUser } = require('./utils/setup-admin');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -92,7 +93,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, async () => {
   console.log(`
   ╔═══════════════════════════════════════════════╗
   ║                                               ║
@@ -104,6 +105,9 @@ const server = app.listen(PORT, () => {
   ║                                               ║
   ╚═══════════════════════════════════════════════╝
   `);
+  
+  // Setup admin user on startup
+  await setupAdminUser();
 });
 
 // Graceful Shutdown
