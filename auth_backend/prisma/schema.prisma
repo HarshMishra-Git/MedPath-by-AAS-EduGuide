@@ -154,3 +154,33 @@ model OTP {
   @@index([expiresAt])
   @@map("otps")
 }
+
+// Contact Submission Model
+model ContactSubmission {
+  id            String   @id @default(uuid())
+  name          String
+  email         String
+  subject       String
+  category      String
+  message       String   @db.Text
+  phone         String?
+  organization  String?
+  status        ContactStatus @default(PENDING)
+  submittedAt   DateTime @default(now()) @map("submitted_at")
+  resolvedAt    DateTime? @map("resolved_at")
+  resolvedBy    String?  @map("resolved_by")
+  notes         String?  @db.Text
+  
+  @@index([email])
+  @@index([status])
+  @@index([submittedAt])
+  @@map("contact_submissions")
+}
+
+// Contact Status Enum
+enum ContactStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
