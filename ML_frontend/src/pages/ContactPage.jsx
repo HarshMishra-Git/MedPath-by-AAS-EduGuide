@@ -373,7 +373,7 @@ const ContactInfo = () => {
       title: 'Office Address',
       details: 'AAS EduGuide',
       description: 'Kakadeo, Kanpur 208005, India',
-      link: '#',
+      link: 'https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqFQgCEC4YJxivARjHARiABBiKBRiOBTIGCAAQRRg5MgYIARBFGDsyFQgCEC4YJxivARjHARiABBiKBRiOBTINCAMQABiDARixAxiABDIGCAQQRRg8MgYIBRBFGDwyBggGEEUYPDIGCAcQRRg80gEIMzAwOGowajeoAgCwAgA&um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KZfd6qINOJw5MSmDmEQ7iMAA&daddr=117/H-1/377,+Pandu+Nagar,+near+Agra+Sweet+House,+Kakadeo,+Kanpur,+Uttar+Pradesh+208005',
       responseTime: 'Visit by appointment only'
     }
   ]
