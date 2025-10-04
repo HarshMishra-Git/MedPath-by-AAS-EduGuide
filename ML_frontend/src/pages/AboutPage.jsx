@@ -386,6 +386,12 @@ const TeamSection = () => {
       role: "AI Solutions Architect & Data Scientist",
       image: "/api/placeholder/150/150", 
       bio: "Lead architect behind MedPath's AI engine. Specializes in machine learning, data science, and building scalable AI solutions for educational technology."
+    },
+    {
+      name: "Harsh Verma",
+      role: "Data Expert & Sr. Admission Counsellor",
+      image: "/api/placeholder/150/150",
+      bio: "Senior admission counselor with extensive experience in data analysis and student guidance. Combines analytical expertise with personalized counseling to help students achieve their medical career goals."
     }
   ]
 
@@ -406,7 +412,7 @@ const TeamSection = () => {
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row justify-center items-center gap-12 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {team.map((member, index) => (
             <motion.div
               key={member.name}
