@@ -1,0 +1,165 @@
+/* 
+ * Responsive Enhancements
+ * Non-breaking improvements for mobile/tablet/desktop compatibility
+ * Safe to add - only enhances, doesn't override existing styles
+ */
+
+/* Ensure proper viewport on all devices */
+@layer base {
+  /* Prevent horizontal scroll on mobile */
+  html {
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Touch-friendly tap targets (44x44px minimum) */
+@layer utilities {
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Optimize for touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    button, a, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Stack flex items on mobile */
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+
+  /* Full width on mobile */
+  .mobile-full {
+    width: 100% !important;
+  }
+
+  /* Hide on mobile */
+  .mobile-hide {
+    display: none !important;
+  }
+
+  /* Smaller padding on mobile */
+  .mobile-p-reduce {
+    padding: 1rem !important;
+  }
+
+  /* Better form spacing */
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents iOS zoom */
+  }
+
+  /* Ensure modals/dialogs fill screen on mobile */
+  [role="dialog"], .modal {
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+  }
+}
+
+/* Tablet-specific optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-hide {
+    display: none !important;
+  }
+
+  .tablet-show {
+    display: block !important;
+  }
+}
+
+/* Desktop-specific */
+@media (min-width: 1025px) {
+  .desktop-hide {
+    display: none !important;
+  }
+}
+
+/* Landscape mobile orientation fixes */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  .section-spacing {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  .safe-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: currentColor !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  /* Hide non-essential elements */
+  nav, footer, .no-print {
+    display: none !important;
+  }
+
+  /* Optimize for printing */
+  * {
+    background: white !important;
+    color: black !important;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* Fix for iOS Safari bottom bar overlap */
+@supports (-webkit-touch-callout: none) {
+  .ios-safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  }
+}
+
+/* Prevent layout shift */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Better focus indicators for accessibility */
+@media (prefers-reduced-motion: no-preference) {
+  *:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

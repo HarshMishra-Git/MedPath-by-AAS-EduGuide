@@ -1,5 +1,7 @@
 /* Import enhanced animations */
 @import './styles/animations.css';
+/* Import responsive enhancements */
+@import './styles/responsive-enhancements.css';
 
 @tailwind base;
 @tailwind components;
