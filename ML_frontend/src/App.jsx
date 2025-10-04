@@ -26,6 +26,7 @@ import TermsPage from './pages/TermsPage'
 import FAQPage from './pages/FAQPage'
 import NotFoundPage from './pages/NotFoundPage'
 import AdminContactsPage from './pages/AdminContactsPage'
+import AdminLoginPage from './pages/AdminLoginPage'
 
 
 // NEET College Finder API Health Check
@@ -120,6 +121,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/admin" element={<AdminLoginPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
@@ -156,7 +158,7 @@ function App() {
             <Route 
               path="/admin/contacts" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requireAdmin={true}>
                   <AdminContactsPage />
                 </ProtectedRoute>
               } 

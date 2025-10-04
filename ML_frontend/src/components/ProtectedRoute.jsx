@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import PaymentModal from './payment/PaymentModal';
 
-const ProtectedRoute = ({ children, requirePayment = false }) => {
+const ProtectedRoute = ({ children, requirePayment = false, requireAdmin = false }) => {
   const { isAuthenticated, loading, user, checkAuth } = useAuth();
   const location = useLocation();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -30,7 +31,15 @@ const ProtectedRoute = ({ children, requirePayment = false }) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    // Redirect to admin login if admin route, otherwise regular login
+    const loginPath = requireAdmin ? '/admin' : '/login';
+    return <Navigate to={loginPath} state={{ from: location }} replace />;
+  }
+
+  // Check admin requirement
+  if (requireAdmin && user?.role !== 'ADMIN' && user?.role !== 'SUPER_ADMIN') {
+    toast.error('Access denied. Admin privileges required.');
+    return <Navigate to="/" replace />;
   }
 
   // Check payment requirement for prediction features
