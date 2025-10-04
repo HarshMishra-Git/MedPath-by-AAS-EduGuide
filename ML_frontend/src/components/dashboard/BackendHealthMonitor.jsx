@@ -39,17 +39,17 @@ const BackendHealthMonitor = () => {
 
     // Check ML Backend
     try {
-      const mlResponse = await axios.get(`${ML_API}/`, { timeout: 10000 });
+      const mlResponse = await axios.get(`${ML_API}/healthy`, { timeout: 10000 });
       setHealthStatus(prev => ({
         ...prev,
         ml: {
           status: 'online',
-          message: mlResponse.data.message || mlResponse.data.msg || 'Healthy',
+          message: mlResponse.data.message || mlResponse.data.status || 'Healthy',
           lastCheck: new Date().toLocaleTimeString(),
         }
       }));
     } catch (error) {
-      const errorMessage = error.response?.data?.detail || error.message || 'Service unavailable';
+      const errorMessage = error.response?.data?.detail || error.response?.data?.message || error.message || 'Service unavailable';
       const statusCode = error.response?.status ? ` (${error.response.status})` : '';
       setHealthStatus(prev => ({
         ...prev,

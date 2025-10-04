@@ -75,7 +75,7 @@ export const mlApiService = {
   // Health check
   async checkHealth() {
     try {
-      const response = await mlApi.get('/health');
+      const response = await mlApi.get('/healthy');
       return response.data;
     } catch (error) {
       throw new Error(error.userMessage || 'Health check failed');
