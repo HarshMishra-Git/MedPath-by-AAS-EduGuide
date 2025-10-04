@@ -94,51 +94,56 @@ const SignupPage = () => {
 
     setLoading(true);
     try {
-      // Send OTP immediately without creating account first (faster)
-      const identifier = identifierType === 'email' ? formData.email : formData.phone;
+      // Step 1: Create user account FIRST (backend requires user to exist before sending OTP)
+      toast.loading('Creating your account...', { id: 'signup' });
       
-      toast.loading(`Sending OTP to your ${identifierType}...`, { id: 'otp-send' });
+      const signupData = {
+        fullName: formData.fullName,
+        password: formData.password,
+      };
+
+      if (identifierType === 'email') {
+        signupData.email = formData.email;
+      } else {
+        signupData.phone = formData.phone;
+      }
+
+      const signupResult = await signup(signupData);
       
-      try {
-        const otpResponse = await sendOTP(identifierType === 'email' ? 'email' : 'sms', identifier);
+      if (signupResult.success) {
+        toast.success('Account created! \u2713', { id: 'signup' });
         
-        // Show OTP in development mode for testing
-        if (import.meta.env.DEV && otpResponse?.otp) {
-          toast.success(
-            <div>
-              <div>OTP sent successfully!</div>
-              <div className="mt-2 p-2 bg-yellow-100 rounded text-gray-900 font-bold">
-                Development OTP: {otpResponse.otp}
-              </div>
-            </div>,
-            { id: 'otp-send', duration: 10000 }
-          );
-        } else {
-          toast.success(`OTP sent to your ${identifierType}! Check your inbox.`, { id: 'otp-send' });
-        }
+        // Step 2: Now send OTP for verification
+        const identifier = identifierType === 'email' ? formData.email : formData.phone;
+        toast.loading(`Sending verification OTP...`, { id: 'otp-send' });
         
-        setStep(2); // Move to OTP verification immediately
-        setOtpTimer(60); // 60 seconds timer
-      } catch (otpError) {
-        // If OTP send fails, try to still proceed (dev mode fallback)
-        console.error('OTP send error:', otpError);
-        
-        const errorMessage = otpError.message || 'Unknown error';
-        const isRateLimited = errorMessage.toLowerCase().includes('rate') || 
-                             errorMessage.toLowerCase().includes('too many') ||
-                             errorMessage.toLowerCase().includes('limit');
-        
-        if (import.meta.env.DEV) {
-          // In development, allow proceeding without OTP
-          if (isRateLimited) {
-            toast(
+        try {
+          const otpResponse = await sendOTP(identifierType === 'email' ? 'email' : 'sms', identifier);
+          
+          // Show OTP in development mode for testing
+          if (import.meta.env.DEV && otpResponse?.otp) {
+            toast.success(
               <div>
-                <div className="font-bold text-yellow-600">\u26a0\ufe0f Rate Limit Reached</div>
-                <div className="text-sm mt-1">Backend is rate-limited. Use bypass OTP: <span className="font-bold text-green-600">123456</span></div>
+                <div>OTP sent successfully!</div>
+                <div className="mt-2 p-2 bg-yellow-100 rounded text-gray-900 font-bold">
+                  Development OTP: {otpResponse.otp}
+                </div>
               </div>,
-              { id: 'otp-send', duration: 15000, icon: '\ud83d\udd27' }
+              { id: 'otp-send', duration: 10000 }
             );
           } else {
+            toast.success(`OTP sent to your ${identifierType}! Check your inbox.`, { id: 'otp-send' });
+          }
+          
+          setStep(2); // Move to OTP verification
+          setOtpTimer(60);
+        } catch (otpError) {
+          console.error('OTP send error:', otpError);
+          
+          const errorMessage = otpError.message || 'Unknown error';
+          
+          // Always allow proceeding to OTP page (they can verify later or use 123456 in dev)
+          if (import.meta.env.DEV) {
             toast(
               <div>
                 <div className="font-bold">\ud83d\udd27 Development Mode</div>
@@ -147,16 +152,16 @@ const SignupPage = () => {
               </div>,
               { id: 'otp-send', duration: 15000 }
             );
+          } else {
+            toast.error(`OTP send failed: ${errorMessage}. You can verify later.`, { id: 'otp-send' });
           }
           setStep(2);
           setOtpTimer(60);
-        } else {
-          throw otpError;
         }
       }
     } catch (error) {
       console.error('Signup error:', error);
-      toast.error(error.message || 'Failed to send OTP. Please try again.', { id: 'otp-send' });
+      toast.error(error.message || 'Signup failed. Please try again.', { id: 'signup' });
     } finally {
       setLoading(false);
     }
@@ -170,7 +175,7 @@ const SignupPage = () => {
 
     setLoading(true);
     try {
-      // Step 1: Verify OTP
+      // Verify OTP (user already created in handleSubmit)
       const identifier = identifierType === 'email' ? formData.email : formData.phone;
       toast.loading('Verifying OTP...', { id: 'verify-otp' });
       
@@ -179,6 +184,7 @@ const SignupPage = () => {
       try {
         const otpResult = await verifyOTP(identifier, otp, identifierType === 'email' ? 'email' : 'sms');
         otpVerified = otpResult.success;
+        toast.success('OTP verified! \u2713', { id: 'verify-otp' });
       } catch (verifyError) {
         console.error('OTP verification error:', verifyError);
         
@@ -192,38 +198,20 @@ const SignupPage = () => {
       }
       
       if (otpVerified) {
-        toast.success('OTP verified! \u2713', { id: 'verify-otp' });
-        
-        // Step 2: Create account after OTP verification
-        toast.loading('Creating your account...', { id: 'create-account' });
-        const signupData = {
-          fullName: formData.fullName,
-          password: formData.password,
-        };
-
-        if (identifierType === 'email') {
-          signupData.email = formData.email;
-        } else {
-          signupData.phone = formData.phone;
-        }
-
-        const signupResult = await signup(signupData);
-        
-        if (signupResult.success) {
-          toast.success('Account created successfully! \ud83c\udf89', { id: 'create-account' });
-          toast('Complete payment to unlock predictions', { 
-            icon: '\ud83d\udcb3',
-            duration: 5000,
-            style: {
-              background: '#3b82f6',
-              color: '#fff',
-            }
-          });
-          // Redirect to dashboard
-          setTimeout(() => {
-            navigate('/dashboard', { replace: true });
-          }, 800);
-        }
+        // Account already created, just redirect
+        toast.success('Email verified successfully! \ud83c\udf89');
+        toast('Complete payment to unlock predictions', { 
+          icon: '\ud83d\udcb3',
+          duration: 5000,
+          style: {
+            background: '#3b82f6',
+            color: '#fff',
+          }
+        });
+        // Redirect to dashboard
+        setTimeout(() => {
+          navigate('/dashboard', { replace: true });
+        }, 800);
       }
     } catch (error) {
       toast.error(error.message || 'Verification failed. Please try again.', { id: 'verify-otp' });
