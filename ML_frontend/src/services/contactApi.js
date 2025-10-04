@@ -113,7 +113,7 @@ export const contactApiService = {
 
       // If real API is enabled, make actual API call
       if (ENABLE_REAL_CONTACT_API) {
-        const response = await contactApi.post('/api/contact', {
+        const response = await contactApi.post('/contact', {
           name: contactData.name,
           email: contactData.email,
           subject: contactData.subject,
