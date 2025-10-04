@@ -35,6 +35,7 @@ model User {
   // Account Status
   accountStatus     AccountStatus @default(PENDING_PAYMENT) @map("account_status")
   subscriptionType  String    @default("one_time") @map("subscription_type")
+  role              UserRole  @default(USER)
   
   // Metadata
   registrationMethod String?  @map("registration_method")
@@ -183,4 +184,11 @@ enum ContactStatus {
   IN_PROGRESS
   RESOLVED
   CLOSED
+}
+
+// User Role Enum
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
 }

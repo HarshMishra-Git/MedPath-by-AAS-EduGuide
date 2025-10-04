@@ -1,7 +1,11 @@
 const jwtService = require('../services/jwt.service');
 const prisma = require('../config/database');
 
-const authMiddleware = async (req, res, next) => {
+/**
+ * Admin Authentication Middleware
+ * Verifies that the user is authenticated AND has admin role
+ */
+const adminAuthMiddleware = async (req, res, next) => {
   try {
     // Get token from header
     const authHeader = req.headers.authorization;
@@ -9,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({
         success: false,
-        message: 'No token provided. Authorization required.'
+        message: 'No token provided. Admin authorization required.'
       });
     }
 
@@ -47,6 +51,14 @@ const authMiddleware = async (req, res, next) => {
       });
     }
 
+    // Check if user has admin role
+    if (session.user.role !== 'ADMIN' && session.user.role !== 'SUPER_ADMIN') {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. Admin privileges required.'
+      });
+    }
+
     // Attach user to request
     req.user = {
       id: session.user.id,
@@ -66,4 +78,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+module.exports = adminAuthMiddleware;

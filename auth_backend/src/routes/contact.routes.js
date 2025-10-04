@@ -3,6 +3,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const { PrismaClient } = require('@prisma/client');
 const { apiLimiter } = require('../middleware/rate-limiter');
+const adminAuthMiddleware = require('../middleware/admin.middleware');
 const rateLimit = require('express-rate-limit');
 
 const prisma = new PrismaClient();
@@ -137,9 +138,9 @@ router.get('/health', (req, res) => {
 /**
  * @route   GET /api/contact/submissions
  * @desc    Get all contact submissions (Admin only)
- * @access  Public (will add auth middleware later)
+ * @access  Private (Admin)
  */
-router.get('/submissions', async (req, res) => {
+router.get('/submissions', adminAuthMiddleware, async (req, res) => {
   try {
     const { status, limit = 50, offset = 0 } = req.query;
 
@@ -181,9 +182,9 @@ router.get('/submissions', async (req, res) => {
 /**
  * @route   GET /api/contact/submissions/:id
  * @desc    Get single contact submission by ID
- * @access  Public (will add auth middleware later)
+ * @access  Private (Admin)
  */
-router.get('/submissions/:id', async (req, res) => {
+router.get('/submissions/:id', adminAuthMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -214,9 +215,9 @@ router.get('/submissions/:id', async (req, res) => {
 /**
  * @route   PATCH /api/contact/submissions/:id
  * @desc    Update contact submission status/notes
- * @access  Public (will add auth middleware later)
+ * @access  Private (Admin)
  */
-router.patch('/submissions/:id', [
+router.patch('/submissions/:id', adminAuthMiddleware, [
   body('status').optional().isIn(['PENDING', 'IN_PROGRESS', 'RESOLVED', 'CLOSED']),
   body('notes').optional().trim().escape(),
   body('resolvedBy').optional().trim()
@@ -275,9 +276,9 @@ router.patch('/submissions/:id', [
 /**
  * @route   GET /api/contact/stats
  * @desc    Get contact submission statistics
- * @access  Public (will add auth middleware later)
+ * @access  Private (Admin)
  */
-router.get('/stats', async (req, res) => {
+router.get('/stats', adminAuthMiddleware, async (req, res) => {
   try {
     const [total, pending, inProgress, resolved, closed] = await Promise.all([
       prisma.contactSubmission.count(),
