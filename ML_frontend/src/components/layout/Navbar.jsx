@@ -115,7 +115,7 @@ const Navbar = ({ apiHealthy }) => {
                   <img 
                     src="/images/aas-logo.png" 
                     alt="AAS EduGuide Logo" 
-                    className="w-20 h-16 sm:w-24 sm:h-20 md:w-28 md:h-22 object-contain"
+                    className="w-24 h-20 sm:w-24 sm:h-20 md:w-28 md:h-22 object-contain"
                     onLoad={() => console.log('Navbar logo loaded successfully')}
                     onError={(e) => {
                       console.error('Navbar logo failed to load from:', e.target.src)
@@ -234,19 +234,67 @@ const Navbar = ({ apiHealthy }) => {
                     isActive={isActive(item.path)}
                   />
                 ))}
-                <div className="pt-4 border-t border-gray-200 space-y-3">
-                  {!isAuthenticated ? (
+                
+                {/* User Dashboard and Logout Section for Authenticated Users */}
+                {isAuthenticated && (
+                  <div className="pt-4 border-t border-gray-200 space-y-2">
                     <button
                       onClick={() => {
                         window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
                         setIsMobileMenuOpen(false)
-                        navigate('/login')
+                        navigate('/dashboard')
                       }}
-                      className="w-full btn-gradient flex items-center justify-center space-x-2"
+                      className="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 w-full"
                     >
-                      <Zap className="w-4 h-4" />
-                      <span>Login to Predict</span>
+                      <User className="w-5 h-5" />
+                      <div className="text-left">
+                        <div className="font-medium">{user?.fullName || 'Dashboard'}</div>
+                        <div className="text-xs text-gray-500">View your account</div>
+                      </div>
                     </button>
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        logout()
+                      }}
+                      className="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-red-600 hover:text-red-700 hover:bg-red-50 w-full"
+                    >
+                      <LogOut className="w-5 h-5" />
+                      <div className="text-left">
+                        <div className="font-medium">Logout</div>
+                        <div className="text-xs text-red-500">Sign out of your account</div>
+                      </div>
+                    </button>
+                  </div>
+                )}
+                
+                {/* CTA Buttons */}
+                <div className="pt-4 border-t border-gray-200 space-y-3">
+                  {!isAuthenticated ? (
+                    <>
+                      <button
+                        onClick={() => {
+                          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+                          setIsMobileMenuOpen(false)
+                          navigate('/login')
+                        }}
+                        className="w-full bg-gray-700 hover:bg-gray-800 text-white font-medium px-4 py-3 rounded-lg flex items-center justify-center space-x-2 transition-colors"
+                      >
+                        <User className="w-4 h-4" />
+                        <span>Login</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+                          setIsMobileMenuOpen(false)
+                          navigate('/signup')
+                        }}
+                        className="w-full btn-gradient flex items-center justify-center space-x-2"
+                      >
+                        <UserPlus className="w-4 h-4" />
+                        <span>Sign Up</span>
+                      </button>
+                    </>
                   ) : user?.accountStatus === 'ACTIVE' ? (
                     <button
                       onClick={() => {
